@@ -3,6 +3,7 @@ function Game(roster) {
     this.currentBatter = 0
     this.ourScore = 0
     this.theirSore = 0
+    this.inning = 1
     
     this.getNextBatter = function () {
         this.currentBatter++
@@ -22,6 +23,7 @@ function Game(roster) {
         this.currentBatter = gameInProgress.currentBatter
         this.ourScore = gameInProgress.ourScore
         this.theirSore = gameInProgress.theirSore
+        this.inning = gameInProgress.inning
     }
 
     this.getCurrentBatter = function () {
@@ -66,6 +68,7 @@ let updateBatterView = function () {
     document.querySelector('#on-deck-batter-p').textContent = currentGame.getOnDeckBatter()
     document.querySelector('#our-score').textContent = currentGame.ourScore
     document.querySelector('#their-score').textContent = currentGame.theirSore
+    document.querySelector('#inning').textContent = currentGame.inning
     rosterCheck()
     
 }
@@ -113,6 +116,18 @@ document.querySelector("#their-score-minus").addEventListener('click', function 
     if(currentGame.theirSore < 0){
         currentGame.theirSore = 0
     }
+    updateBatterView()
+    localStorage.setItem('game', JSON.stringify(currentGame))
+})
+
+document.querySelector('#inning-plus').addEventListener('click',function (e) {
+    currentGame.inning ++
+    updateBatterView()
+    localStorage.setItem('game', JSON.stringify(currentGame))
+})
+
+document.querySelector('#inning-minus').addEventListener('click', function (e) {
+    currentGame.inning--
     updateBatterView()
     localStorage.setItem('game', JSON.stringify(currentGame))
 })
